@@ -66,3 +66,8 @@ Dado un modelo UML pequeño y válido, el proyecto debe generar el modelo relaci
 2. Diseñar el metamodelo y las reglas de validación.
 3. Crear un modelo UML de ejemplo para probar el flujo completo.
 4. Implementar la transformación ATL y las plantillas Acceleo.
+
+
+## Configuración inicial
+
+Consulta [docs/TOOLCHAIN.md](docs/TOOLCHAIN.md) para las versiones disponibles y los pasos para completar la instalación de Papyrus, ATL y Acceleo.
