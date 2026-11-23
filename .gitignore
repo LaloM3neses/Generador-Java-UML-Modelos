@@ -1,6 +1,7 @@
-# Eclipse workspace metadata
-.metadata/
+# Eclipse workspace and configuration
 .eclipse-workspace/
+.eclipse-configuration/
+.metadata/
 
 # Java build output
 bin/
