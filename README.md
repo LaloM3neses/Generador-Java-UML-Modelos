@@ -71,3 +71,5 @@ Dado un modelo UML pequeño y válido, el proyecto debe generar el modelo relaci
 ## Configuración inicial
 
 Consulta [docs/TOOLCHAIN.md](docs/TOOLCHAIN.md) para las versiones disponibles y los pasos para completar la instalación de Papyrus, ATL y Acceleo.
+
+Consulta [docs/documentacion-latex/main.tex](docs/documentacion-latex/main.tex) para la documentación completa del proyecto en LaTeX.
