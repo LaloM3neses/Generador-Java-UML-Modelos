@@ -1,0 +1,22 @@
+# Eclipse workspace and local metadata
+.metadata/
+.eclipse-workspace/
+.settings/
+.project
+.classpath
+
+# Java build output
+bin/
+target/
+build/
+*.class
+
+# Local databases and logs
+*.db
+*.sqlite
+*.sqlite3
+*.log
+
+# Operating system files
+.DS_Store
+Thumbs.db
