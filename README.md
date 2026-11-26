@@ -10,7 +10,7 @@ Abre PowerShell en la raíz del repositorio y ejecuta:
 .\scripts\run.ps1
 ```
 
-El script compila el generador con el JDK 17 en `E:\Proyectos eclipse\tools\jdk-17.0.21.1+2`, transforma el ejemplo, produce las salidas y compila las clases Java generadas. Si ese JDK no está en la ruta, busca `javac` y `java` en el sistema.
+El script compila el generador con JDK 17, procesa el ejemplo, produce las salidas y compila las clases Java generadas. También valida el DDL con SQLite: crea una base temporal, comprueba las cuatro tablas y las relaciones, y confirma que una clave foránea inválida se rechaza. El ejecutable local de SQLite está en `E:\Proyectos eclipse\tools\sqlite`; no se modifica el `PATH` global.
 
 Para indicar otro modelo y carpeta de salida:
 
@@ -32,6 +32,6 @@ No edites manualmente las salidas: se regeneran desde el modelo UML/XMI.
 
 Se admiten String, Integer, Boolean y Real/Double. Las asociaciones binarias uno a muchos y muchos a muchos del ejemplo se convierten a claves foráneas y tabla de unión. No se implementan herencia, operaciones UML, asociaciones n-arias, interfaz gráfica ni una aplicación CRUD.
 
-El prototipo Java está ejecutable y sus clases generadas compilan. Eclipse Modeling Tools 2025-06 y los complementos ATL, Acceleo y Papyrus se prepararon desde sitios oficiales, pero Eclipse actualmente no inicia por un error del servicio `org.eclipse.core.runtime`. Por tanto, el uso de Papyrus y el flujo ATL/Acceleo aún no están validados. El DDL se genera, pero falta ejecutarlo en una instalación de SQLite.
+El prototipo Java y sus clases generadas compilan. Eclipse Modeling Tools 2025-06 abre el proyecto con cero errores y una advertencia en la vista de problemas. SQLite 3.54.1 valida el DDL generado, las relaciones y el rechazo de una clave foránea inválida. Papyrus, ATL y Acceleo están instalados como herramientas de evolución, pero su flujo de transformación todavía no forma parte del ejecutable Java verificado.
 
-Consulta `docs/TOOLCHAIN.md` para el entorno y `docs/documentacion-latex/main.tex` para la memoria académica. Las capturas reales del IDE y la ejecución están pendientes; no se presentan imágenes simuladas.
+Consulta `docs/TOOLCHAIN.md` para el entorno y `docs/documentacion-latex/main.tex` para la memoria académica. Las capturas reales no se pudieron guardar desde la herramienta de Recortes en esta sesión; la memoria conserva marcadores explícitos en esos lugares.

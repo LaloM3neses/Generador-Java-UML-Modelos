@@ -4,10 +4,10 @@
 
 - Eclipse Modeling Tools 2025-06, en `E:\Proyectos eclipse\tools\eclipse`.
 - Temurin JDK 17, en `E:\Proyectos eclipse\tools\jdk-17.0.21.1+2`.
+- SQLite 3.54.1 x64, en `E:\Proyectos eclipse\tools\sqlite\sqlite3.exe`.
 - Proyecto: `E:\Proyectos eclipse\Generador-Java-UML-Modelos`.
-- Eclipse incluye su propia JVM para ejecutar el IDE.
 
-Se agregaron desde repositorios oficiales los complementos ATL 4.12, Acceleo 3.7.17 y Papyrus UML/diagramas 7.1.0. El perfil de paquetes los registró, pero al iniciar el IDE se encontró `Unable to acquire application service` asociado con `org.eclipse.core.runtime`, incluso después de iniciar con `-clean`. Por eso, la instalación de Eclipse queda pendiente de reparación y no se afirma que el flujo ATL/Acceleo se haya ejecutado desde el IDE.
+Se corrigió en `eclipse.ini` la ruta del perfil de configuración para que use la configuración de Eclipse que contiene los complementos instalados. Eclipse abre el espacio de trabajo `Proyectos Eclipse` y el proyecto actualizado muestra cero errores y una advertencia en la vista Problems. Se conservó la protección de Microsoft Defender; no se agregaron exclusiones.
 
 ## Ejecución comprobada del prototipo
 
@@ -18,20 +18,26 @@ Set-Location 'E:\Proyectos eclipse\Generador-Java-UML-Modelos'
 .\scripts\run.ps1
 ```
 
-El script compila el generador con JDK 17, procesa `examples\biblioteca\biblioteca.uml`, escribe JSON, Java y SQL y compila automáticamente las clases Java resultantes. Para pasar otra entrada y una raíz de salida:
+El script compila el generador con JDK 17, procesa `examples\biblioteca\biblioteca.uml`, escribe el modelo relacional JSON, tres clases Java y el esquema SQL, y compila automáticamente las clases generadas. Al encontrar SQLite en `E:\Proyectos eclipse\tools\sqlite` (o en el PATH), también ejecuta el DDL en una base temporal, verifica que se creen cuatro tablas, inserta datos con relaciones válidas y comprueba que una clave foránea inválida sea rechazada. La base temporal se elimina al terminar.
+
+Para pasar otra entrada y una raíz de salida:
 
 ```powershell
 .\scripts\run.ps1 .\ruta\modelo.uml .
 ```
 
-## Herramientas oficiales de modelado
+## Herramientas de modelado
 
 - Papyrus Desktop 7.1.0 para Eclipse 2025-06: <https://download.eclipse.org/modeling/mdt/papyrus/papyrus-desktop/updates/releases/2025-06/>
 - ATL 4.12.0: <https://download.eclipse.org/mmt/atl/builds/release/4.12.0/>
 - Acceleo 3.7: <https://download.eclipse.org/acceleo/updates/releases/3.7/R202405130857>
 
-La compatibilidad publicada de Acceleo 3.7 incluye Eclipse 2025-06. Estos complementos son herramientas previstas para la evolución del proyecto; el ejecutable actualmente verificado es `ModelGenerator.java`, no una transformación ATL seguida de plantillas Acceleo.
+Papyrus, ATL y Acceleo se instalaron desde repositorios oficiales. El ejecutable verificado actualmente es `ModelGenerator.java`; no se afirma que la transformación ATL seguida de plantillas Acceleo ya esté integrada ni ejecutada.
 
 ## SQLite
 
-El generador crea `generated\sql\schema.sql`. En esta computadora no se encontró Python ni el ejecutable SQLite, por lo que la aplicación del DDL a un motor SQLite real no quedó verificada. El esquema se inspeccionó y se comprobó que contiene claves primarias, las claves foráneas previstas y la tabla de unión del ejemplo.
+El ejecutable x64 de SQLite 3.54.1 se descargó del sitio oficial y su SHA3-256 se contrastó con el valor publicado por SQLite. No se modificó el PATH global. El script usa el binario local y comprueba el DDL real, las cuatro tablas, la inserción de asociaciones válidas y el rechazo de una clave foránea inválida. La validación genera y borra una base desechable dentro de `build`.
+
+## Evidencias visuales
+
+La captura de Eclipse y la captura de una ejecución de `scripts/run.ps1` quedan pendientes porque la superposición de la Herramienta Recortes no aceptó acciones de captura/guardado durante esta sesión. La memoria no incluye imágenes simuladas: conserva los espacios identificados para insertar capturas auténticas.

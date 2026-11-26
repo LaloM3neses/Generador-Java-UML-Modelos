@@ -38,6 +38,7 @@
 \captionsetup{font=small,labelfont={bf,color=azulNoche},justification=centering}
 \setlength{\parskip}{4pt}
 \setlength{\parindent}{1.2em}
+\emergencystretch=3em
 
 % --- Enlaces y encabezados ---
 \usepackage{hyperref}
@@ -133,7 +134,7 @@ Lugar y fecha: & \rule{\linewidth}{0.4pt}\\
 \end{tabularx}
 \vspace{1.0cm}
 \begin{center}
-{\small\color{grisTexto}Versión documental 1.0 \textbar\ Estado: prototipo ejecutable con validación Java}\par
+{\small\color{grisTexto}Versión documental 1.0 \textbar\ Estado: prototipo con validación Java y SQLite}\par
 {\small\color{grisTexto}26 de noviembre de 2026}
 \end{center}
 \end{titlepage}
@@ -143,7 +144,7 @@ Lugar y fecha: & \rule{\linewidth}{0.4pt}\\
 \addcontentsline{toc}{chapter}{Resumen}
 Este proyecto implementa un prototipo de desarrollo basado en modelos que lee un modelo UML serializado en XMI y genera un modelo relacional intermedio en JSON, clases Java 17 y un esquema DDL para SQLite. La ejecución comprobada se realiza con un generador Java autónomo; Eclipse, ATL, Acceleo y Papyrus se prepararon como herramientas de evolución, pero la cadena ATL--Acceleo no se reporta como ejecutada.
 
-El ejemplo incluido contiene Autor, Libro y Editorial, atributos básicos, una relación uno a muchos y una relación muchos a muchos. La ejecución produjo tres entidades y cuatro tablas; el código Java resultante también se compiló con JDK 17. La instalación del IDE presenta un error de servicio de Eclipse y no se encontró un motor SQLite local, limitaciones que se identifican por separado.
+El ejemplo incluido contiene Autor, Libro y Editorial, atributos básicos, una relación uno a muchos y una relación muchos a muchos. La ejecución produjo tres entidades y cuatro tablas; el código Java resultante también se compiló con JDK 17. Eclipse abre el proyecto con cero errores y una advertencia en la vista de problemas. El DDL se ejecutó en SQLite 3.54.1: se comprobaron cuatro tablas, relaciones válidas y el rechazo de una clave foránea inválida.
 
 \noindent\textbf{Palabras clave:} desarrollo basado en modelos, UML, EMF, ATL, Acceleo, Java, SQLite.
 
@@ -356,15 +357,15 @@ Los tipos admitidos son String, Integer, Boolean y Real/Double. Las asociaciones
 % ==================== CAPÍTULO 6 ====================
 \chapter{Entorno y organización del repositorio}
 \section{Herramientas previstas}
-El entorno de trabajo preparado utiliza Eclipse Modeling Tools 2025-06, Git y Java 17 para las salidas generadas. La distribución de Eclipse incorpora una JVM para ejecutar el IDE. El entorno incluye Papyrus Desktop, ATL y Acceleo desde sitios oficiales; sin embargo, Eclipse presenta un error de servicio al iniciar y el flujo ATL/Acceleo no forma parte de la ejecución verificada. Las versiones y fuentes se documentan en \texttt{docs/TOOLCHAIN.md}.
+El entorno de trabajo preparado utiliza Eclipse Modeling Tools 2025-06, Git y Java 17 para las salidas generadas. La distribución de Eclipse incorpora una JVM para ejecutar el IDE. El entorno incluye Papyrus Desktop, ATL y Acceleo desde sitios oficiales. Eclipse abre el espacio de trabajo y el proyecto sin errores, con una advertencia visible. El flujo ATL/Acceleo no forma parte de la ejecución verificada. Las versiones y fuentes se documentan en \texttt{docs/TOOLCHAIN.md}.
 
 \begin{itemize}
   \item Papyrus Desktop 7.1.0 se publica para Eclipse 2025-06.
   \item ATL 4.12.0 está disponible desde el repositorio oficial de versiones.
-  \item Acceleo 3.7.17 quedó registrado en la instalación; Eclipse no inicia para validar el complemento.
+  \item Acceleo 3.7.17 quedó registrado en la instalación; no se ha validado una transformación ATL/Acceleo ejecutable.
 \end{itemize}
 
-SQLite es embebido y no requiere un servidor. El DDL se genera, pero en este equipo no se encontró un motor SQLite ni Python; por tanto, su ejecución real en SQLite queda pendiente.
+SQLite es embebido y no requiere un servidor. SQLite 3.54.1 se instaló localmente en E: y el script de ejecución valida el DDL en una base temporal, comprueba cuatro tablas y prueba restricciones referenciales.
 
 \section{Estructura del repositorio y extensiones previstas}
 \begin{description}[leftmargin=3.5cm,style=nextline]
@@ -391,21 +392,21 @@ SQLite es embebido y no requiere un servidor. El DDL se genera, pero en este equ
 % ==================== CAPÍTULO 7 ====================
 \chapter{Estado del proyecto y evidencias}
 \section{Estado verificable}
-El prototipo de generación está implementado y se ejecutó en E:. Se compiló el generador, se procesó el ejemplo, se produjeron tres clases Java y cuatro tablas SQL, y se compilaron las clases generadas con JDK 17. La ejecución en Eclipse, la transformación ATL, las plantillas Acceleo y la creación de una base SQLite real no se verificaron.
+El prototipo se ejecutó desde E:. Se compiló el generador y sus tres clases producidas con JDK 17. SQLite 3.54.1 creó cuatro tablas desde el DDL, aceptó relaciones válidas y rechazó una clave foránea inválida. Eclipse abrió el proyecto con cero errores y una advertencia. ATL y Acceleo siguen sin integrarse en el ejecutable verificado.
 
 \section{Evidencia del entorno de trabajo}
-Eclipse debe iniciar correctamente para capturar el proyecto abierto. Esta evidencia permanece pendiente por el error de servicio descrito en este informe.
+Eclipse abre el proyecto, pero no se pudo guardar una captura durante esta sesión porque la superposición de la Herramienta Recortes no respondió a las acciones de captura.
 
 \evidencia{figuras/eclipse-proyecto.png}
 {Proyecto abierto en Eclipse}
-{Pendiente: captura real del proyecto abierto en Eclipse; el IDE no inicia por el error señalado.}
+{Pendiente: insertar una captura real de Eclipse; no se presenta una imagen simulada.}
 
 \section{Evidencia de ejecución}
-La captura de ejecución debe mostrar una ejecución real de scripts/run.ps1 y los archivos Java y SQL generados. No se ha guardado una captura real, por lo que esta evidencia permanece pendiente.
+La ejecución de scripts/run.ps1 se verificó, pero la captura no pudo guardarse desde la herramienta de Recortes en esta sesión.
 
 \evidencia{figuras/ejecucion-generador.png}
 {Ejecución del generador y producción de salidas}
-{Pendiente: incorporar una captura auténtica de consola y archivos generados. No se presenta una imagen simulada como evidencia.}
+{Pendiente: insertar una captura auténtica de consola y archivos generados; no se presenta una imagen simulada.}
 
 \section{Resultados de validación}
 \begin{table}[H]
@@ -421,22 +422,23 @@ PV-02 & Generación de Java y modelo intermedio & Correcto: tres clases y JSON.\
 PV-03 & Compilación del Java generado & Correcto con JDK 17.\\
 PV-04 & Asociación muchos a muchos & Correcto: tabla unión y claves foráneas.\\
 PV-05 & Asociación uno a muchos & Correcto: FK de Libro a Editorial.\\
-PV-06 & Ejecución del DDL en SQLite & No verificado: motor no instalado.\\
+PV-06 & Ejecución del DDL en SQLite & Correcto: cuatro tablas; relaciones y FK inválida comprobadas.\\
+PV-07 & Apertura del proyecto en Eclipse & Correcto: cero errores y una advertencia.\\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-Las comprobaciones de lectura, generación y compilación Java sí se realizaron. La ejecución del DDL en SQLite y la apertura del proyecto en Eclipse permanecen sin verificar.
+Se verificaron lectura, generación, compilación Java, DDL en SQLite y apertura del proyecto en Eclipse. La captura real de las pantallas queda pendiente; también siguen pendientes la integración ATL/Acceleo y el uso de Papyrus para editar el modelo.
 
 % ==================== CAPÍTULO 8 ====================
 \chapter{Plan de trabajo}
 \section{Hitos}
 \begin{enumerate}
-  \item Reparar el inicio de Eclipse y abrir el modelo de ejemplo en Papyrus.
+  \item Abrir y editar el modelo de ejemplo en Papyrus.
   \item Definir el metamodelo relacional Ecore y ejecutar una transformación ATL.
   \item Implementar y ejecutar las plantillas Acceleo.
-  \item Instalar SQLite y verificar el DDL en una base temporal.
-  \item Capturar pantallas reales del modelo y de la ejecución.
+  \item Integrar una transformación ATL y plantillas Acceleo en la ejecución reproducible.
+  \item Guardar capturas reales del proyecto en Eclipse, la ejecución Java/SQLite y los archivos generados.
   \item Ampliar las reglas y validar entradas inválidas.
   \item Documentar los resultados medidos y limitaciones.
 \end{enumerate}
@@ -445,7 +447,7 @@ Las comprobaciones de lectura, generación y compilación Java sí se realizaron
 UML admite semánticas más amplias que el subconjunto inicial. Para limitar errores, el alcance deberá validarse de forma temprana. Identificadores, nombres reservados y colisiones requieren reglas explícitas. La combinación de Eclipse y complementos debe mantenerse documentada. Por último, el generador deberá validar referencias antes de escribir salidas parciales.
 
 \chapter{Conclusiones}
-Se implementó un prototipo reproducible que transforma una entrada UML/XMI pequeña en un modelo relacional JSON, clases Java y DDL SQL. La generación y compilación Java se verificaron con JDK 17; el ejemplo demuestra tipos básicos, una clave foránea y una tabla de unión. Eclipse aún no inicia por un error del servicio de runtime y el DDL no se ejecutó en SQLite porque el motor no está disponible. Estas limitaciones quedan documentadas; ATL/Acceleo, la apertura del modelo en Papyrus y las capturas reales son trabajo futuro.
+Se implementó un prototipo reproducible que transforma una entrada UML/XMI pequeña en un modelo relacional JSON, clases Java y DDL SQL. La generación y compilación Java se verificaron con JDK 17. SQLite 3.54.1 ejecutó el DDL y confirmó las cuatro tablas, relaciones válidas y rechazo de una clave foránea inválida. Eclipse abre el proyecto con cero errores y una advertencia. La integración ATL/Acceleo, el uso de Papyrus y la incorporación de capturas reales siguen como trabajo pendiente.
 \chapter*{Glosario}
 \addcontentsline{toc}{chapter}{Glosario}
 \begin{description}[leftmargin=3cm,style=nextline]
