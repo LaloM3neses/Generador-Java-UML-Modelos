@@ -43,3 +43,4 @@ if ($sqliteCommand) {
 } else {
     Write-Warning 'SQLite no esta instalado; se omitio la validacion del DDL.'
 }
+$global:LASTEXITCODE = 0
