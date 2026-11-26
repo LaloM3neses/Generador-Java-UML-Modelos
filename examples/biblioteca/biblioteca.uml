@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001"
+  xmlns:xmi="http://www.omg.org/spec/XMI/20131001"
+  xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML"
+  xmi:id="_biblioteca" name="Biblioteca">
+  <packagedElement xmi:type="uml:Class" xmi:id="_Autor" name="Autor">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_Autor_id" name="id" type="Integer" lower="1" upper="1"/>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_Autor_nombre" name="nombre" type="String" lower="1" upper="1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_Libro" name="Libro">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_Libro_id" name="id" type="Integer" lower="1" upper="1"/>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_Libro_titulo" name="titulo" type="String" lower="1" upper="1"/>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_Libro_publicado" name="publicado" type="Boolean" lower="1" upper="1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_Editorial" name="Editorial">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_Editorial_id" name="id" type="Integer" lower="1" upper="1"/>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_Editorial_nombre" name="nombre" type="String" lower="1" upper="1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_Autor_Libro" name="Autor_Libro">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_Autor_libros" name="libros" type="_Autor" lower="0" upper="*"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_Libro_autores" name="autores" type="_Libro" lower="0" upper="*"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_Editorial_Libro" name="Editorial_Libro">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_Libro_editorial" name="editorial" type="_Editorial" lower="1" upper="1"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_Editorial_libros" name="libros" type="_Libro" lower="0" upper="*"/>
+  </packagedElement>
+</uml:Model>

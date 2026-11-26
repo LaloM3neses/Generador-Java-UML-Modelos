@@ -1,158 +1,336 @@
-\documentclass[12pt,a4paper]{report}
+\documentclass[12pt,a4paper,oneside]{report}
+
+% --- Idioma, tipografía y página ---
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[spanish,es-nodecimaldot]{babel}
-\usepackage{geometry}
+\usepackage{lmodern}
 \usepackage{microtype}
-\usepackage{booktabs,longtable,array,enumitem}
-\usepackage{xcolor,listings,hyperref,fancyhdr}
-\geometry{margin=2.5cm}
-\hypersetup{colorlinks=true,linkcolor=blue!45!black,urlcolor=blue!55!black,pdftitle={Documentación del Generador Java UML Modelos}}
-\setlist{topsep=3pt,itemsep=2pt}
+\usepackage[a4paper,margin=2.7cm,headheight=16pt]{geometry}
+
+% --- Tablas, figuras y diagramas ---
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs,longtable,array,tabularx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit}
+\usepackage{caption}
+
+% --- Estilo editorial ---
+\definecolor{azulNoche}{HTML}{17324D}
+\definecolor{azulMedio}{HTML}{286A8A}
+\definecolor{turquesa}{HTML}{2A9D8F}
+\definecolor{grisTexto}{HTML}{4B5563}
+\definecolor{grisFondo}{HTML}{F3F6F8}
+\definecolor{dorado}{HTML}{D5A84B}
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+  {\normalfont\bfseries\color{azulNoche}}
+  {\filleft\Large\chaptertitlename\ \thechapter}
+  {0.6ex}{\titlerule\vspace{1ex}\Huge}
+\titleformat{\section}{\Large\bfseries\color{azulMedio}}{\thesection}{0.7em}{}
+\titleformat{\subsection}{\large\bfseries\color{azulNoche}}{\thesubsection}{0.7em}{}
+\titlespacing*{\chapter}{0pt}{-12pt}{24pt}
+\setlist{topsep=4pt,itemsep=3pt,leftmargin=1.5em}
+\captionsetup{font=small,labelfont={bf,color=azulNoche},justification=centering}
+\setlength{\parskip}{4pt}
+\setlength{\parindent}{1.2em}
+
+% --- Enlaces y encabezados ---
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=azulNoche,
+  urlcolor=azulMedio,
+  citecolor=azulMedio,
+  pdftitle={Generador Java UML Modelos},
+  pdfsubject={Proyecto final de Desarrollo Basado en Modelos},
+  pdfauthor={Estudiante}
+}
+\usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{Generador Java UML Modelos}
-\fancyhead[R]{Documentación técnica}
-\fancyfoot[C]{\thepage}
-\setlength{\headheight}{15pt}
-\lstdefinestyle{sql}{language=SQL,basicstyle=\ttfamily\small,keywordstyle=\color{blue!50!black}\bfseries,commentstyle=\color{gray},breaklines=true,frame=single,showstringspaces=false}
+\fancyhead[L]{\small\color{grisTexto}Generador Java UML Modelos}
+\fancyhead[R]{\small\color{grisTexto}Desarrollo Basado en Modelos}
+\fancyfoot[L]{\small\color{grisTexto}Documento académico}
+\fancyfoot[R]{\small\color{grisTexto}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+\setlength{\headheight}{16pt}
+
+% --- Código fuente ---
+\lstdefinestyle{sql}{
+  language=SQL,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{azulMedio}\bfseries,
+  commentstyle=\color{grisTexto}\itshape,
+  stringstyle=\color{turquesa},
+  breaklines=true,
+  frame=single,
+  rulecolor=\color{azulMedio},
+  backgroundcolor=\color{grisFondo},
+  showstringspaces=false,
+  numbers=left,
+  numberstyle=\tiny\color{grisTexto},
+  xleftmargin=1em,
+  framexleftmargin=0.7em
+}
+
+% Insertar capturas reales cuando estén disponibles. Los recuadros alternativos
+% mantienen el documento compilable durante la fase de diseño.
+\newcommand{\evidencia}[3]{%
+  \begin{figure}[H]
+    \centering
+    \IfFileExists{#1}{\includegraphics[width=0.94\textwidth,height=0.62\textheight,keepaspectratio]{#1}}{%
+      \fcolorbox{azulMedio}{grisFondo}{%
+        \parbox[c][5.2cm][c]{0.88\textwidth}{\centering
+          {\Large\bfseries\color{azulNoche}Evidencia pendiente}\par\vspace{0.7em}
+          \textbf{#2}\par\vspace{0.5em}
+          {\color{grisTexto}#3}\par\vspace{0.6em}
+          {\small\ttfamily\color{azulMedio}\detokenize{#1}}
+        }%
+      }%
+    }
+    \caption{#2}
+    \label{fig:#1}
+  \end{figure}
+}
+
 \begin{document}
+
+% ==================== PORTADA ====================
 \begin{titlepage}
-\centering
-\vspace*{2.2cm}
-{\Huge\bfseries Generador-Java-UML-Modelos\par}
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture,overlay]
+  \fill[azulNoche] (current page.north west) rectangle ([yshift=-6.0cm]current page.north east);
+  \fill[turquesa] ([yshift=-6.0cm]current page.north west) rectangle ([yshift=-6.18cm]current page.north east);
+  \fill[dorado] ([xshift=2.7cm,yshift=-0.75cm]current page.north west) rectangle ([xshift=3.35cm,yshift=-0.84cm]current page.north west);
+\end{tikzpicture}
+\vspace*{-1.75cm}
+\begin{flushleft}
+{\large\color{white}\bfseries PROYECTO FINAL}\par
+\vspace{0.35cm}
+{\LARGE\color{white}\bfseries Generador Java\par UML Modelos}\par
+\vspace{0.25cm}
+{\large\color{white}Transformación de modelos UML a modelo relacional, Java y SQL}\par
+\end{flushleft}
+\vspace{5.8cm}
+\begin{center}
+{\Large\bfseries\color{azulNoche}INFORME TÉCNICO}\par
 \vspace{0.6cm}
-{\LARGE Documentación del proyecto\par}
-\vspace{1.2cm}
-{\large Generación de modelos relacionales, código Java y SQL para SQLite a partir de UML\par}
+{\large Asignatura: Desarrollo Basado en Modelos}\par
+\end{center}
 \vfill
-\begin{tabular}{rl}
-Asignatura: & Desarrollo Basado en Modelos\\
-Estado: & Diseño y estructura inicial\\
-Versión del documento: & 0.1\\
-Fecha: & 23 de noviembre de 2026\\
-\end{tabular}
-\vfill
-{\large Documento de trabajo\par}
+\begin{tabularx}{\textwidth}{>{\bfseries\color{azulNoche}}p{4.0cm}X}
+Institución: & \rule{\linewidth}{0.4pt}\\[0.6cm]
+Programa académico: & \rule{\linewidth}{0.4pt}\\[0.6cm]
+Estudiante: & \rule{\linewidth}{0.4pt}\\[0.6cm]
+Docente: & \rule{\linewidth}{0.4pt}\\[0.6cm]
+Lugar y fecha: & \rule{\linewidth}{0.4pt}\\
+\end{tabularx}
+\vspace{1.0cm}
+\begin{center}
+{\small\color{grisTexto}Versión documental 1.0 \textbar\ Estado: prototipo ejecutable con validación Java}\par
+{\small\color{grisTexto}26 de noviembre de 2026}
+\end{center}
 \end{titlepage}
+
 \pagenumbering{roman}
+\chapter*{Resumen}
+\addcontentsline{toc}{chapter}{Resumen}
+Este proyecto implementa un prototipo de desarrollo basado en modelos que lee un modelo UML serializado en XMI y genera un modelo relacional intermedio en JSON, clases Java 17 y un esquema DDL para SQLite. La ejecución comprobada se realiza con un generador Java autónomo; Eclipse, ATL, Acceleo y Papyrus se prepararon como herramientas de evolución, pero la cadena ATL--Acceleo no se reporta como ejecutada.
+
+El ejemplo incluido contiene Autor, Libro y Editorial, atributos básicos, una relación uno a muchos y una relación muchos a muchos. La ejecución produjo tres entidades y cuatro tablas; el código Java resultante también se compiló con JDK 17. La instalación del IDE presenta un error de servicio de Eclipse y no se encontró un motor SQLite local, limitaciones que se identifican por separado.
+
+\noindent\textbf{Palabras clave:} desarrollo basado en modelos, UML, EMF, ATL, Acceleo, Java, SQLite.
+
 \tableofcontents
+\clearpage
+\listoffigures
+\clearpage
+\listoftables
 \clearpage
 \pagenumbering{arabic}
 
-\chapter*{Resumen}
-\addcontentsline{toc}{chapter}{Resumen}
-El proyecto propone un flujo de desarrollo basado en modelos para describir la estructura de un sistema una sola vez mediante un diagrama UML de clases y generar, a partir de él, un modelo relacional, clases Java y un script SQL ejecutable en SQLite. La transformación de UML al metamodelo relacional se realizará con ATL; las salidas Java y SQL se producirán mediante plantillas Acceleo sobre modelos EMF/Ecore.
-\par\medskip
-La primera versión se limita a clases, atributos de tipos básicos y asociaciones uno a uno, uno a muchos y muchos a muchos. Se excluyen herencia, operaciones UML, interfaces gráficas y generación de una aplicación CRUD. El repositorio y su estructura inicial ya están preparados; metamodelos, transformaciones y generadores todavía deben implementarse. Las reglas identificadas como propuestas requieren confirmación antes de convertirse en contrato definitivo.
-
+% ==================== CAPÍTULO 1 ====================
 \chapter{Introducción}
-\section{Contexto y problema}
-El desarrollo basado en modelos (MDE) usa modelos de alto nivel como fuente principal para producir otros modelos o artefactos. Representar la misma estructura manualmente en un diagrama, una base de datos y clases Java duplica trabajo y facilita inconsistencias. Un atributo puede cambiar en una representación y permanecer desactualizado en las otras.
-\section{Propuesta}
-El generador automatizará la transformación desde UML al modelo relacional y desde este último a Java y SQL. El modelo relacional intermedio hace explícitas las decisiones de persistencia —tablas, columnas, claves y restricciones— antes de generar archivos.
+\section{Contexto}
+El desarrollo basado en modelos (MDE, por sus siglas en inglés) utiliza modelos como artefactos centrales del proceso de desarrollo. En vez de mantener manualmente la misma estructura en diagramas, clases y bases de datos, una cadena de transformación permite derivar esos artefactos desde una fuente conceptual común.
+
+\section{Problema}
+Cuando el diseño conceptual, el código y el esquema de datos se mantienen por separado, un cambio puede propagarse de forma incompleta. Esto produce discrepancias entre nombres, tipos, claves y relaciones. El proyecto busca reducir esa duplicación mediante una transformación reproducible desde UML hacia un modelo relacional y dos salidas textuales.
+
 \section{Objetivo general}
-Construir un prototipo de desarrollo basado en modelos que convierta un modelo UML de clases válido en un modelo relacional, clases Java y un script SQL compatible con SQLite.
+Diseñar e implementar un prototipo MDE que convierta un modelo UML de clases válido en un modelo relacional, clases Java y un script DDL ejecutable en SQLite.
+
 \section{Objetivos específicos}
 \begin{enumerate}
-\item Definir un subconjunto UML y tipos acotados para la primera versión.
-\item Diseñar un metamodelo relacional expresado con EMF/Ecore.
-\item Transformar clases, atributos y asociaciones admitidas mediante ATL.
-\item Generar clases Java y DDL mediante Acceleo.
-\item Comprobar el esquema generado ejecutándolo en SQLite.
+  \item Delimitar un subconjunto de UML y acordar las convenciones de tipos, identificadores y nombres.
+  \item Definir un metamodelo relacional con EMF/Ecore.
+  \item Implementar en ATL la transformación de UML al modelo relacional.
+  \item Crear plantillas Acceleo para generar Java y SQL desde el modelo relacional.
+  \item Validar las salidas con compilación Java y ejecución del DDL en SQLite.
 \end{enumerate}
 
+\section{Enfoque de trabajo}
+El trabajo se organizará en incrementos verificables: especificación del subconjunto, metamodelado, transformación, generación, validación y documentación. Las decisiones marcadas como propuestas se confirmarán antes de fijarlas como reglas de implementación.
+
+% ==================== CAPÍTULO 2 ====================
 \chapter{Alcance y requisitos}
-\section{Alcance}
-La primera versión contempla clases UML con atributos tipados; asociaciones binarias uno a uno, uno a muchos y muchos a muchos; tablas, columnas, claves primarias y foráneas; tablas de unión; generación de una clase Java por entidad y un script SQL de creación.
-\par\medskip
-Quedan fuera herencia, interfaces, clases abstractas, operaciones UML, asociaciones n-arias, composición con semántica especial, interfaz gráfica, aplicación CRUD, sincronización bidireccional y migraciones.
+\section{Alcance funcional}
+La versión inicial contempla:
+\begin{itemize}
+  \item Clases UML persistibles y atributos de tipos básicos.
+  \item Asociaciones binarias uno a uno, uno a muchos y muchos a muchos.
+  \item Tablas, columnas, claves primarias, claves foráneas y tablas de unión.
+  \item Una clase Java por entidad y un script DDL para SQLite.
+  \item Diagnósticos para modelos que incumplan las reglas acordadas.
+\end{itemize}
+
+\section{Fuera del alcance}
+La primera versión no incluye herencia, interfaces, operaciones UML, asociaciones n-arias, composición con semántica especial, aplicación CRUD, interfaz gráfica, sincronización bidireccional ni migraciones de esquemas.
+
 \section{Requisitos funcionales}
 \begin{longtable}{p{0.13\textwidth}p{0.79\textwidth}}
+\caption{Requisitos funcionales iniciales}\label{tab:rf}\\
 \toprule
-\textbf{ID} & \textbf{Requisito}\\
+\textbf{ID} & \textbf{Descripción}\\
 \midrule
+\endfirsthead
+\toprule
+\textbf{ID} & \textbf{Descripción}\\
+\midrule
+\endhead
 RF-01 & Leer un modelo UML de clases de Papyrus que cumpla el subconjunto soportado.\\
 RF-02 & Validar nombres, tipos, extremos de asociaciones y multiplicidades.\\
 RF-03 & Producir un modelo relacional con tablas, columnas y claves.\\
-RF-04 & Crear una tabla de unión por asociación muchos a muchos.\\
-RF-05 & Generar código Java desde el modelo relacional.\\
+RF-04 & Crear una tabla de unión por cada asociación muchos a muchos.\\
+RF-05 & Generar código Java a partir del modelo relacional.\\
 RF-06 & Generar DDL para crear el esquema en SQLite.\\
-RF-07 & Informar entradas inválidas en lugar de producir silenciosamente una salida incompleta.\\
+RF-07 & Informar entradas inválidas y evitar presentar salidas incompletas como válidas.\\
 \bottomrule
 \end{longtable}
-\section{Requisitos no funcionales}
-Las salidas deben ser reproducibles y deterministas. El proyecto separará modelos de entrada, transformaciones y artefactos generados. El objetivo inicial para el código generado es Java 17. Las dependencias y sus versiones se documentarán.
 
-\chapter{Arquitectura}
-\section{Flujo de procesamiento}
-\begin{center}
-\fbox{\parbox{0.86\textwidth}{\centering
-Modelo de clases UML en Papyrus\\[4pt]
-$\Downarrow$ validación y transformación ATL\\[4pt]
-Modelo relacional EMF/Ecore\\[4pt]
-$\Downarrow$ plantillas Acceleo\\[4pt]
-Clases Java \hspace{1cm} Script SQL para SQLite
-}}
-\end{center}
-\section{Responsabilidades}
+\section{Requisitos no funcionales}
+Las transformaciones deberán ser reproducibles y deterministas. La organización separará los modelos de entrada, las transformaciones y los artefactos generados. El código generado tendrá como objetivo Java 17; las dependencias y sus versiones se registrarán en la documentación del entorno.
+
+% ==================== CAPÍTULO 3 ====================
+\chapter{Arquitectura propuesta}
+\section{Cadena de transformación}
+La arquitectura introduce un modelo relacional intermedio para hacer explícitas las decisiones de persistencia antes de generar código y SQL. La Figura~\ref{fig:arquitectura} resume el flujo propuesto.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.85,transform shape,
+  node distance=0.75cm,
+  bloque/.style={draw=azulNoche,fill=grisFondo,rounded corners=3pt,minimum width=3.0cm,minimum height=1.0cm,align=center,font=\small},
+  paso/.style={draw=turquesa,fill=turquesa!8,rounded corners=3pt,minimum width=2.5cm,minimum height=0.85cm,align=center,font=\small},
+  flecha/.style={-{Stealth[length=2.5mm]},thick,draw=azulMedio}
+]
+\node[bloque] (uml) {Modelo UML\\Papyrus};
+\node[paso,right=of uml] (atl) {Validación\\y ATL};
+\node[bloque,right=of atl] (rel) {Modelo relacional\\EMF/Ecore};
+\node[paso,right=of rel] (acc) {Plantillas\\Acceleo};
+\node[bloque,above right=0.25cm and 0.55cm of acc] (java) {Clases Java\\Java 17};
+\node[bloque,below right=0.25cm and 0.55cm of acc] (sql) {Esquema DDL\\SQLite};
+\draw[flecha] (uml) -- (atl);
+\draw[flecha] (atl) -- (rel);
+\draw[flecha] (rel) -- (acc);
+\draw[flecha] (acc.east) -- (java.west);
+\draw[flecha] (acc.east) -- (sql.west);
+\end{tikzpicture}
+\caption{Arquitectura lógica propuesta para el flujo MDE.}
+\label{fig:arquitectura}
+\end{figure}
+
+\section{Responsabilidades de los componentes}
 \begin{longtable}{p{0.22\textwidth}p{0.68\textwidth}}
+\caption{Responsabilidades por componente}\label{tab:componentes}\\
 \toprule
 \textbf{Componente} & \textbf{Responsabilidad}\\
 \midrule
-Papyrus/UML & Editar el modelo conceptual de clases y asociaciones.\\
-EMF/Ecore & Definir metamodelos y serializar modelos EMF.\\
-ATL & Transformar elementos UML admitidos al modelo relacional.\\
-Acceleo & Recorrer el modelo relacional y escribir Java y SQL.\\
-Java & Compilar o ampliar las clases generadas; objetivo inicial Java 17.\\
-SQLite & Ejecutar y comprobar el esquema producido.\\
+\endfirsthead
+\toprule
+\textbf{Componente} & \textbf{Responsabilidad}\\
+\midrule
+\endhead
+Papyrus/UML & Edición del modelo conceptual de clases y asociaciones.\\
+EMF/Ecore & Definición de metamodelos y serialización de modelos.\\
+ATL & Transformación de elementos UML admitidos al modelo relacional.\\
+Acceleo & Generación de archivos Java y SQL a partir del modelo relacional.\\
+Java & Compilación y posible extensión de las clases generadas; objetivo inicial Java 17.\\
+SQLite & Ejecución y comprobación del esquema generado.\\
 \bottomrule
 \end{longtable}
-\section{Principios}
-El modelo UML es la fuente conceptual; el relacional es la fuente de generación. ATL contiene las reglas de persistencia y Acceleo presenta el modelo relacional como texto. Los archivos generados son reproducibles y no se editan manualmente. Un modelo fuera del alcance debe recibir un diagnóstico claro.
 
-\chapter{Reglas de transformación}
+\section{Principios de diseño}
+El modelo UML será la fuente conceptual. El modelo relacional será la fuente de generación. ATL contendrá las reglas de persistencia y Acceleo se ocupará de presentar el modelo relacional como texto. Los archivos generados serán reproducibles y no deberán editarse manualmente. Para modelos fuera del alcance se emitirá un diagnóstico explícito.
+
+% ==================== CAPÍTULO 4 ====================
+\chapter{Reglas de generación implementadas}
 \section{Clases, atributos e identificadores}
 Cada clase UML persistible se transforma en una entidad relacional, una tabla y una clase Java. Cada atributo admitido se convierte en columna y propiedad Java.
-\par\medskip
-\textbf{Clave primaria propuesta.} Si la clase no declara clave explícita, se propone añadir una columna técnica \texttt{id}. Esta decisión está pendiente de aprobación. Su representación concreta en SQLite y Java debe fijarse en el metamodelo y aplicarse uniformemente.
-\section{Tipos básicos propuestos}
-La lista final aún no se ha acordado. Esta tabla es una propuesta para debatir antes de implementar los generadores.
-\begin{center}
+
+\begin{quote}
+Si una clase no declara un identificador, el generador crea una clave técnica entera \texttt{id}, utilizada como clave primaria en el esquema SQL.
+\end{quote}
+
+\section{Correspondencia de tipos}
+La tabla~\ref{tab:tipos} documenta la correspondencia implementada por el prototipo.
+
+\begin{table}[H]
+\centering
+\caption{Correspondencia inicial de tipos}
+\label{tab:tipos}
 \begin{tabular}{lll}
 \toprule
-\textbf{Tipo UML} & \textbf{Tipo Java} & \textbf{SQLite sugerido}\\
+\textbf{Tipo UML} & \textbf{Tipo Java sugerido} & \textbf{Tipo SQLite sugerido}\\
 \midrule
 String & String & TEXT\\
 Integer & Integer & INTEGER\\
-Boolean & Boolean & INTEGER con valores 0 o 1\\
+Boolean & Boolean & INTEGER (0/1)\\
 Real & Double & REAL\\
 \bottomrule
 \end{tabular}
-\end{center}
-Se propone que atributos de multiplicidad exactamente uno sean \texttt{NOT NULL}; los opcionales aceptarían \texttt{NULL}. Esta política debe confirmarse.
+\end{table}
+
+Los atributos obligatorios se generan como \texttt{NOT NULL}; los booleanos se representan como enteros con una restricción a 0 o 1.
+
 \section{Asociaciones}
-\begin{longtable}{p{0.2\textwidth}p{0.28\textwidth}p{0.44\textwidth}}
+\begin{table}[H]
+\centering
+\caption{Representación relacional propuesta para asociaciones}
+\label{tab:asociaciones}
+\begin{tabularx}{\textwidth}{l l X}
 \toprule
-\textbf{Relación} & \textbf{Representación} & \textbf{Restricción propuesta}\\
+\textbf{Relación UML} & \textbf{Representación} & \textbf{Restricción propuesta}\\
 \midrule
-Uno a uno & Clave foránea en una tabla & La clave foránea es única.\\
-Uno a muchos & Clave foránea en el lado muchos & Referencia la tabla del lado uno.\\
-Muchos a muchos & Tabla de unión y dos claves foráneas & Las claves foráneas forman una clave primaria compuesta.\\
+Uno a uno & Clave foránea en una tabla & La clave foránea tendrá restricción de unicidad.\\
+Uno a muchos & Clave foránea en el lado muchos & Referencia la clave primaria del lado uno.\\
+Muchos a muchos & Tabla de unión & Dos claves foráneas con clave primaria compuesta.\\
 \bottomrule
-\end{longtable}
-El nombre de las tablas de unión se construirá de manera determinista. Dirección, nulabilidad y tratamiento de colisiones deben precisarse durante el diseño del metamodelo.
-\section{Ejemplo SQL ilustrativo}
-El fragmento muestra una salida esperada para Autor y Libro; no es resultado de una ejecución actual del generador.
-\begin{lstlisting}[style=sql]
+\end{tabularx}
+\end{table}
+
+Las tablas de unión usan una convención determinista basada en los nombres de las clases; su clave primaria es compuesta por las dos claves foráneas.
+
+\section{Ejemplo de salida SQL esperada}
+El siguiente fragmento es parte del DDL generado para las entidades \texttt{Autor} y \texttt{Libro} en el ejemplo incluido.
+
+\begin{lstlisting}[style=sql,caption={DDL ilustrativo para una relación muchos a muchos}]
 CREATE TABLE Autor (
   id INTEGER PRIMARY KEY,
   nombre TEXT NOT NULL
 );
+
 CREATE TABLE Libro (
   id INTEGER PRIMARY KEY,
   titulo TEXT NOT NULL
 );
+
 CREATE TABLE Autor_Libro (
   autor_id INTEGER NOT NULL,
   libro_id INTEGER NOT NULL,
@@ -162,76 +340,132 @@ CREATE TABLE Autor_Libro (
 );
 \end{lstlisting}
 
-\chapter{Validación y errores}
-Antes de generar se comprobará que los nombres de clases y atributos sean válidos y únicos según las reglas acordadas; los tipos estén permitidos; las asociaciones sean binarias con dos extremos válidos; las multiplicidades estén soportadas; y los nombres resultantes de tablas, columnas y restricciones no colisionen.
-\par\medskip
-Un diagnóstico identificará el elemento y la causa del error. Si no se puede preservar la semántica de la entrada, la salida no se presentará como completa. El formato técnico de los mensajes se definirá al implementar el flujo.
-
-\chapter{Herramientas y organización}
-\section{Entorno}
-El entorno preparado usa Eclipse Modeling Tools 2025-06, Java 17 para el código generado y Git. El paquete de Eclipse incluye una JVM compatible con la ejecución del IDE. El flujo requiere los complementos Papyrus Desktop, ATL y Acceleo; las instrucciones y enlaces oficiales están en \texttt{docs/TOOLCHAIN.md}.
-\begin{itemize}
-\item Papyrus Desktop 7.1.0 se publica para Eclipse 2025-06.
-\item ATL 4.12.0 está disponible desde su repositorio oficial de releases.
-\item Acceleo 3.7.16 forma parte de las entregas de Eclipse 2025-06 a 2025-09.
-\end{itemize}
-SQLite es embebido y no necesita servidor. La aplicación Java incorporará un controlador JDBC de SQLite cuando se implemente ese módulo.
-\section{Estructura del repositorio}
-\begin{description}[leftmargin=3.3cm,style=nextline]
-\item[\texttt{models/uml/}] Modelos Papyrus de entrada.
-\item[\texttt{models/relational/}] Metamodelo Ecore y modelos relacionales.
-\item[\texttt{transformations/atl/}] Reglas ATL de UML a relacional.
-\item[\texttt{generator/acceleo/}] Plantillas para Java y SQL.
-\item[\texttt{examples/biblioteca/}] Ejemplo para recorrer el flujo.
-\item[\texttt{generated/java/}] Clases Java generadas.
-\item[\texttt{generated/sql/}] Scripts SQL generados.
-\item[\texttt{docs/}] Documentación del proyecto y entorno.
-\end{description}
-\section{Flujo previsto de uso}
+% ==================== CAPÍTULO 5 ====================
+\chapter{Validación y manejo de errores}
+El prototipo comprueba las condiciones necesarias para generar el modelo de ejemplo. Su cobertura no equivale a una validación completa del estándar UML. Entre las condiciones que revisa se encuentran:
 \begin{enumerate}
-\item Crear o editar el modelo UML en Papyrus.
-\item Ejecutar la validación.
-\item Ejecutar ATL y revisar el modelo relacional.
-\item Ejecutar Acceleo para generar Java y SQL.
-\item Ejecutar el DDL en SQLite y comprobar tablas y restricciones.
-\item Regenerar después de cada cambio UML, sin editar manualmente la salida.
+  \item Los nombres de clases y atributos sean válidos y únicos en su ámbito.
+  \item Los tipos de atributos pertenezcan al catálogo admitido.
+  \item Las asociaciones sean binarias y sus extremos estén correctamente definidos.
+  \item Las multiplicidades puedan representarse con las reglas implementadas.
+  \item Los nombres resultantes de tablas, columnas y restricciones no colisionen.
 \end{enumerate}
 
-\chapter{Criterios de aceptación y plan}
-\section{Criterio de éxito}
-Dado un modelo UML pequeño y válido, el prototipo deberá producir un modelo relacional conforme a las reglas acordadas, generar una clase Java por entidad, generar DDL que SQLite pueda ejecutar y diagnosticar modelos fuera del alcance.
+Los tipos admitidos son String, Integer, Boolean y Real/Double. Las asociaciones se limitan al subconjunto binario procesado por el lector. Los mensajes ante entradas fuera de alcance se reportan durante la ejecución.
+
+% ==================== CAPÍTULO 6 ====================
+\chapter{Entorno y organización del repositorio}
+\section{Herramientas previstas}
+El entorno de trabajo preparado utiliza Eclipse Modeling Tools 2025-06, Git y Java 17 para las salidas generadas. La distribución de Eclipse incorpora una JVM para ejecutar el IDE. El entorno incluye Papyrus Desktop, ATL y Acceleo desde sitios oficiales; sin embargo, Eclipse presenta un error de servicio al iniciar y el flujo ATL/Acceleo no forma parte de la ejecución verificada. Las versiones y fuentes se documentan en \texttt{docs/TOOLCHAIN.md}.
+
+\begin{itemize}
+  \item Papyrus Desktop 7.1.0 se publica para Eclipse 2025-06.
+  \item ATL 4.12.0 está disponible desde el repositorio oficial de versiones.
+  \item Acceleo 3.7.17 quedó registrado en la instalación; Eclipse no inicia para validar el complemento.
+\end{itemize}
+
+SQLite es embebido y no requiere un servidor. El DDL se genera, pero en este equipo no se encontró un motor SQLite ni Python; por tanto, su ejecución real en SQLite queda pendiente.
+
+\section{Estructura del repositorio y extensiones previstas}
+\begin{description}[leftmargin=3.5cm,style=nextline]
+  \item[\texttt{models/uml/}] Modelos Papyrus de entrada.
+  \item[\texttt{models/relational/}] Metamodelo Ecore y modelos relacionales.
+  \item[\texttt{transformations/atl/}] Reglas de UML a relacional.
+  \item[\texttt{generator/acceleo/}] Plantillas para Java y SQL.
+  \item[\texttt{examples/biblioteca/}] Ejemplo para recorrer el flujo.
+  \item[\texttt{generated/java/}] Clases Java generadas.
+  \item[\texttt{generated/sql/}] Scripts SQL generados.
+  \item[\texttt{docs/}] Documentación y guías del entorno.
+\end{description}
+
+\section{Procedimiento de uso previsto}
+\begin{enumerate}
+  \item Crear o editar el modelo UML en Papyrus.
+  \item Validar que cumpla el subconjunto soportado.
+  \item Ejecutar ATL y revisar el modelo relacional resultante.
+  \item Ejecutar Acceleo para generar Java y SQL.
+  \item Ejecutar el DDL en SQLite y comprobar tablas y restricciones.
+  \item Regenerar después de cada cambio UML, sin editar manualmente las salidas.
+\end{enumerate}
+
+% ==================== CAPÍTULO 7 ====================
+\chapter{Estado del proyecto y evidencias}
+\section{Estado verificable}
+El prototipo de generación está implementado y se ejecutó en E:. Se compiló el generador, se procesó el ejemplo, se produjeron tres clases Java y cuatro tablas SQL, y se compilaron las clases generadas con JDK 17. La ejecución en Eclipse, la transformación ATL, las plantillas Acceleo y la creación de una base SQLite real no se verificaron.
+
+\section{Evidencia del entorno de trabajo}
+Eclipse debe iniciar correctamente para capturar el proyecto abierto. Esta evidencia permanece pendiente por el error de servicio descrito en este informe.
+
+\evidencia{figuras/eclipse-proyecto.png}
+{Proyecto abierto en Eclipse}
+{Pendiente: captura real del proyecto abierto en Eclipse; el IDE no inicia por el error señalado.}
+
+\section{Evidencia de ejecución}
+La captura de ejecución debe mostrar una ejecución real de scripts/run.ps1 y los archivos Java y SQL generados. No se ha guardado una captura real, por lo que esta evidencia permanece pendiente.
+
+\evidencia{figuras/ejecucion-generador.png}
+{Ejecución del generador y producción de salidas}
+{Pendiente: incorporar una captura auténtica de consola y archivos generados. No se presenta una imagen simulada como evidencia.}
+
+\section{Resultados de validación}
+\begin{table}[H]
+\centering
+\caption{Resultados de comprobación del prototipo}
+\label{tab:pruebas}
+\begin{tabularx}{\textwidth}{l X X}
+\toprule
+\textbf{ID} & \textbf{Comprobación} & \textbf{Resultado}\\
+\midrule
+PV-01 & Lectura de las tres clases del modelo & Correcto: tres entidades.\\
+PV-02 & Generación de Java y modelo intermedio & Correcto: tres clases y JSON.\\
+PV-03 & Compilación del Java generado & Correcto con JDK 17.\\
+PV-04 & Asociación muchos a muchos & Correcto: tabla unión y claves foráneas.\\
+PV-05 & Asociación uno a muchos & Correcto: FK de Libro a Editorial.\\
+PV-06 & Ejecución del DDL en SQLite & No verificado: motor no instalado.\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Las comprobaciones de lectura, generación y compilación Java sí se realizaron. La ejecución del DDL en SQLite y la apertura del proyecto en Eclipse permanecen sin verificar.
+
+% ==================== CAPÍTULO 8 ====================
+\chapter{Plan de trabajo}
 \section{Hitos}
 \begin{enumerate}
-\item Confirmar tipos básicos, claves primarias y convenciones de nombres.
-\item Diseñar el metamodelo relacional Ecore.
-\item Crear el ejemplo de biblioteca en Papyrus.
-\item Implementar y revisar las reglas ATL.
-\item Implementar plantillas Acceleo para Java y SQL.
-\item Integrar SQLite JDBC y comprobar el esquema.
-\item Actualizar esta documentación con decisiones y resultados reales.
+  \item Reparar el inicio de Eclipse y abrir el modelo de ejemplo en Papyrus.
+  \item Definir el metamodelo relacional Ecore y ejecutar una transformación ATL.
+  \item Implementar y ejecutar las plantillas Acceleo.
+  \item Instalar SQLite y verificar el DDL en una base temporal.
+  \item Capturar pantallas reales del modelo y de la ejecución.
+  \item Ampliar las reglas y validar entradas inválidas.
+  \item Documentar los resultados medidos y limitaciones.
 \end{enumerate}
-\section{Riesgos pendientes}
-UML permite semánticas más amplias que el subconjunto inicial. Identificadores, nombres reservados y colisiones requieren reglas explícitas. Debe fijarse y documentarse una combinación compatible de Eclipse y complementos. El generador deberá validar referencias antes de escribir salidas parciales.
 
+\section{Riesgos y mitigación}
+UML admite semánticas más amplias que el subconjunto inicial. Para limitar errores, el alcance deberá validarse de forma temprana. Identificadores, nombres reservados y colisiones requieren reglas explícitas. La combinación de Eclipse y complementos debe mantenerse documentada. Por último, el generador deberá validar referencias antes de escribir salidas parciales.
+
+\chapter{Conclusiones}
+Se implementó un prototipo reproducible que transforma una entrada UML/XMI pequeña en un modelo relacional JSON, clases Java y DDL SQL. La generación y compilación Java se verificaron con JDK 17; el ejemplo demuestra tipos básicos, una clave foránea y una tabla de unión. Eclipse aún no inicia por un error del servicio de runtime y el DDL no se ejecutó en SQLite porque el motor no está disponible. Estas limitaciones quedan documentadas; ATL/Acceleo, la apertura del modelo en Papyrus y las capturas reales son trabajo futuro.
 \chapter*{Glosario}
 \addcontentsline{toc}{chapter}{Glosario}
 \begin{description}[leftmargin=3cm,style=nextline]
-\item[ATL] Lenguaje y entorno para transformar modelos.
-\item[Acceleo] Generador de texto basado en modelos EMF y MTL.
-\item[DDL] Sentencias SQL que definen objetos de una base de datos.
-\item[EMF/Ecore] Marco de Eclipse para definir metamodelos y modelos.
-\item[MDE] Desarrollo de software basado en modelos.
-\item[Modelo fuente] Modelo UML inicial del flujo.
-\item[Modelo destino] Modelo relacional resultante.
+  \item[Acceleo] Generador de texto basado en modelos EMF y MTL.
+  \item[ATL] Lenguaje y entorno para transformar modelos.
+  \item[DDL] Sentencias SQL que definen objetos de una base de datos.
+  \item[EMF/Ecore] Marco de Eclipse para definir metamodelos y modelos.
+  \item[MDE] Desarrollo de software basado en modelos.
+  \item[Modelo fuente] Modelo UML inicial del flujo.
+  \item[Modelo destino] Modelo relacional resultante.
 \end{description}
 
 \chapter*{Referencias}
 \addcontentsline{toc}{chapter}{Referencias}
 \begin{enumerate}
-\item Eclipse Foundation, \emph{Papyrus Downloads}. \url{https://eclipse.dev/papyrus/download.html}
-\item Eclipse Foundation, \emph{ATL release repository}. \url{https://download.eclipse.org/mmt/atl/builds/release/}
-\item Eclipse Foundation, \emph{Acceleo 3.7.16}. \url{https://projects.eclipse.org/projects/modeling.acceleo/releases/3.7.16}
-\item SQLite Project, \emph{SQLite Documentation}. \url{https://www.sqlite.org/docs.html}
+  \item Eclipse Foundation, \emph{Papyrus Downloads}. \url{https://eclipse.dev/papyrus/download.html}
+  \item Eclipse Foundation, \emph{ATL release repository}. \url{https://download.eclipse.org/mmt/atl/builds/release/}
+  \item Eclipse Foundation, \emph{Acceleo 3.7.16}. \url{https://projects.eclipse.org/projects/modeling.acceleo/releases/3.7.16}
+  \item SQLite Project, \emph{SQLite Documentation}. \url{https://www.sqlite.org/docs.html}
+  \item Eclipse Foundation, \emph{Eclipse Modeling Tools 2025-06}. \url{https://www.eclipse.org/downloads/packages/release/2025-06/r/eclipse-modeling-tools}
 \end{enumerate}
-\end{document}
 
+\end{document}

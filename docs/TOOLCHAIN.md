@@ -1,35 +1,37 @@
-# Entorno de desarrollo
+# Entorno de desarrollo y estado de herramientas
 
-## Instalado en este equipo
+## Entorno localizado en E:
 
-- Eclipse Modeling Tools 2025-06, instalado desde Eclipse Foundation.
-- La distribución de Eclipse incluye una JVM 21 para ejecutar el IDE.
-- Java 17 está disponible para compilar el código generado.
-- Git está disponible.
+- Eclipse Modeling Tools 2025-06, en `E:\Proyectos eclipse\tools\eclipse`.
+- Temurin JDK 17, en `E:\Proyectos eclipse\tools\jdk-17.0.21.1+2`.
+- Proyecto: `E:\Proyectos eclipse\Generador-Java-UML-Modelos`.
+- Eclipse incluye su propia JVM para ejecutar el IDE.
 
-## Complementos de Eclipse que requiere el proyecto
+Se agregaron desde repositorios oficiales los complementos ATL 4.12, Acceleo 3.7.17 y Papyrus UML/diagramas 7.1.0. El perfil de paquetes los registró, pero al iniciar el IDE se encontró `Unable to acquire application service` asociado con `org.eclipse.core.runtime`, incluso después de iniciar con `-clean`. Por eso, la instalación de Eclipse queda pendiente de reparación y no se afirma que el flujo ATL/Acceleo se haya ejecutado desde el IDE.
 
-La entrega 2025-06 de Eclipse es la base del entorno. Instala estos componentes desde `Help > Install New Software...`:
+## Ejecución comprobada del prototipo
 
-1. **Papyrus Desktop 7.1.0** — sitio oficial: <https://download.eclipse.org/modeling/mdt/papyrus/papyrus-desktop/updates/releases/2025-06/>
-2. **ATL 4.12.0** — releases oficiales: <https://download.eclipse.org/mmt/atl/builds/release/>
-3. **Acceleo 3.7.16** — busca “Acceleo” en `Help > Eclipse Marketplace...` o en las actualizaciones de Eclipse Modeling Tools.
+Desde PowerShell:
 
-La documentación oficial publica Papyrus Desktop 7.1.0 para Eclipse 2025-06 y Acceleo 3.7.16 como compatible hasta Eclipse 2025-09. ATL 4.12.0 está publicado en su repositorio oficial de releases. Instala los tres desde Eclipse y reinícialo al finalizar. No fuerces complementos si el instalador muestra dependencias sin resolver.
+```powershell
+Set-Location 'E:\Proyectos eclipse\Generador-Java-UML-Modelos'
+.\scripts\run.ps1
+```
 
-## Java y SQLite
+El script compila el generador con JDK 17, procesa `examples\biblioteca\biblioteca.uml`, escribe JSON, Java y SQL y compila automáticamente las clases Java resultantes. Para pasar otra entrada y una raíz de salida:
 
-- El código generado se configurará para Java 17.
-- SQLite es una base de datos embebida, así que no necesita un servidor.
-- La aplicación Java usará el controlador JDBC de SQLite como dependencia cuando se implemente ese módulo. La herramienta de línea de comandos de SQLite es opcional para inspeccionar manualmente una base de datos.
+```powershell
+.\scripts\run.ps1 .\ruta\modelo.uml .
+```
 
-## Estructura del repositorio
+## Herramientas oficiales de modelado
 
-- `models/uml/`: modelos Papyrus de entrada.
-- `models/relational/`: metamodelo Ecore y modelos relacionales.
-- `transformations/atl/`: transformación UML a relacional.
-- `generator/acceleo/`: plantillas de generación Java y SQL.
-- `examples/biblioteca/`: ejemplo pequeño para recorrer el flujo completo.
-- `generated/`: salidas reproducibles; no guardar aquí resultados temporales o específicos del equipo.
+- Papyrus Desktop 7.1.0 para Eclipse 2025-06: <https://download.eclipse.org/modeling/mdt/papyrus/papyrus-desktop/updates/releases/2025-06/>
+- ATL 4.12.0: <https://download.eclipse.org/mmt/atl/builds/release/4.12.0/>
+- Acceleo 3.7: <https://download.eclipse.org/acceleo/updates/releases/3.7/R202405130857>
 
-El espacio de trabajo local de Eclipse vive en `.eclipse-workspace/` y su configuración en `.eclipse-configuration/`; ambos se excluyen del repositorio.
+La compatibilidad publicada de Acceleo 3.7 incluye Eclipse 2025-06. Estos complementos son herramientas previstas para la evolución del proyecto; el ejecutable actualmente verificado es `ModelGenerator.java`, no una transformación ATL seguida de plantillas Acceleo.
+
+## SQLite
+
+El generador crea `generated\sql\schema.sql`. En esta computadora no se encontró Python ni el ejecutable SQLite, por lo que la aplicación del DDL a un motor SQLite real no quedó verificada. El esquema se inspeccionó y se comprobó que contiene claves primarias, las claves foráneas previstas y la tabla de unión del ejemplo.

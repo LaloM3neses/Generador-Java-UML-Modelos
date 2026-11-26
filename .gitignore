@@ -18,3 +18,11 @@ build/
 # Operating system files
 .DS_Store
 Thumbs.db
+
+# LaTeX build files
+/docs/documentacion-latex/*.aux
+/docs/documentacion-latex/*.log
+/docs/documentacion-latex/*.out
+/docs/documentacion-latex/*.toc
+/docs/documentacion-latex/*.lof
+/docs/documentacion-latex/*.lot

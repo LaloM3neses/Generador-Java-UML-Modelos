@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
   <name>Generador-Java-UML-Modelos</name>
-  <comment>Generador de modelos UML a modelo relacional, Java y SQL.</comment>
+  <comment>Generador ejecutable de modelos UML a modelo relacional, Java y SQL.</comment>
   <projects/>
-  <buildSpec/>
-  <natures/>
+  <buildSpec>
+    <buildCommand><name>org.eclipse.jdt.core.javabuilder</name><arguments/></buildCommand>
+  </buildSpec>
+  <natures><nature>org.eclipse.jdt.core.javanature</nature></natures>
 </projectDescription>

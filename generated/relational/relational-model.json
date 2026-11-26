@@ -1,0 +1,22 @@
+{
+  "tables": [
+    { "name": "Autor", "columns": [
+      {"name": "id", "type": "INTEGER", "nullable": false, "primaryKey": true},
+      {"name": "nombre", "type": "TEXT", "nullable": false, "primaryKey": false}
+    ]},
+    { "name": "Libro", "columns": [
+      {"name": "id", "type": "INTEGER", "nullable": false, "primaryKey": true},
+      {"name": "titulo", "type": "TEXT", "nullable": false, "primaryKey": false},
+      {"name": "publicado", "type": "INTEGER", "nullable": false, "primaryKey": false},
+      {"name": "editorial_id", "type": "INTEGER", "nullable": false, "primaryKey": false, "references": "Editorial(id)"}
+    ]},
+    { "name": "Editorial", "columns": [
+      {"name": "id", "type": "INTEGER", "nullable": false, "primaryKey": true},
+      {"name": "nombre", "type": "TEXT", "nullable": false, "primaryKey": false}
+    ]},
+    { "name": "Autor_Libro", "columns": [
+      {"name": "autor_id", "type": "INTEGER", "nullable": false, "primaryKey": true, "references": "Autor(id)"},
+      {"name": "libro_id", "type": "INTEGER", "nullable": false, "primaryKey": true, "references": "Libro(id)"}
+    ]}
+  ]
+}
