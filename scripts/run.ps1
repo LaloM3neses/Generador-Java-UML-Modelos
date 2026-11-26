@@ -34,8 +34,21 @@ if ($sqliteCommand) {
         & $sqliteCommand -batch -bail $database $seedSql
         if ($LASTEXITCODE -ne 0) { throw 'SQLite rechazo las relaciones validas del ejemplo.' }
         $invalidSql = 'PRAGMA foreign_keys=ON; INSERT INTO Autor_Libro(autor_id,libro_id) VALUES (999,1);'
-        $null = & $sqliteCommand -batch -bail $database $invalidSql 2>&1
-        if ($LASTEXITCODE -eq 0) { throw 'SQLite no rechazo la clave foranea de prueba invalida.' }
+        $nativeErrorPreference = Get-Variable PSNativeCommandUseErrorActionPreference -ErrorAction SilentlyContinue
+        $savedErrorPreference = $ErrorActionPreference
+        $ErrorActionPreference = 'Continue'
+        if ($nativeErrorPreference) {
+            $savedNativeErrorPreference = $PSNativeCommandUseErrorActionPreference
+            $PSNativeCommandUseErrorActionPreference = $false
+        }
+        try {
+            $null = & $sqliteCommand -batch -bail $database $invalidSql 2>$null
+            $invalidExitCode = $LASTEXITCODE
+        } finally {
+            $ErrorActionPreference = $savedErrorPreference
+            if ($nativeErrorPreference) { $PSNativeCommandUseErrorActionPreference = $savedNativeErrorPreference }
+        }
+        if ($invalidExitCode -eq 0) { throw 'SQLite no rechazo la clave foranea de prueba invalida.' }
         Write-Host "Validacion SQLite completada: $tableCount tablas, relaciones y clave foranea."
     } finally {
         if (Test-Path -LiteralPath $database) { Remove-Item -LiteralPath $database }
